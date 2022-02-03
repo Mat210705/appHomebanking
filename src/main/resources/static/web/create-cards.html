@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="./styles/cards.css">
+        <link rel="shortcut icon" href="https://img.icons8.com/emoji/48/000000/bank-emoji.png" type="image/x-icon">
+        <title>Crear Tarjetas</title>
+    </head>
+
+
+
+    <body>
+        <header>
+            <div class="logo-header">
+                <img class="logo-mh" src="./img/logo.png" alt="">
+                <img class="logo-mindhub" src="./img/fotojet.png" alt="">
+            </div>
+        </header>
+        <main id="app">
+
+            <div class="d-flex">
+                <!-- Contenido de off canvas  -->
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+                <div class="offcanvas-header">
+                    <div class="logo">
+                        <img class="logo-mh" src="./img/logo.png" alt="">
+                    </div>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="usuario-offcanvas">
+                        <img class="iconoMelba" src="./img/icono.jpeg" alt="">
+                        <p>{{client.firstName}}, {{client.lastName}}</p>
+                        <hr>
+                    </div>
+                    <div class="cuerpo-offcanvas">
+                        <a class="link-primary" href="accounts.html">Cuentas</a>
+                        <a class="link-primary" href="cards.html">Tarjetas</a>
+                        <a class="link-primary" href="transfers.html">Transferencias</a>
+                        <a class="link-primary" href="transfers.html">Realizar un Pago</a>
+                        <button @click="logOut" class="btn btn-primary">Cerrar Sesion</button>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Contenido de off canvas, end.  -->
+            </div>
+            <nav class="nav flex-column">
+                <div id="menu-burguer">
+                    <button class="btn mt-1 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"><img src="https://img.icons8.com/fluency/48/000000/menu--v2.png"/></button>
+                </div>               
+            </nav>
+            <div class="form-control">
+                <form @submit="crearTarjeta">
+                    <div class="buttons mb-4 mt-4">                    
+                        <h5>Tipo de Tarjeta</h5>                    
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" v-model="type" value="CREDIT" class="btn-check form-control" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="btnradio1">CREDITO</label>
+                        
+                            <input type="radio" v-model="type" value="DEBIT" class="btn-check form-control" name="btnradio" id="btnradio2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio2">DEBITO</label>
+                        </div>
+                    
+                        <h5>Color de Tarjeta</h5>
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" v-model="color" value="GOLD" class="btn-check form-control" name="btnradioGroup2" id="btnradio3" autocomplete="off" checked>
+                            <label class="btn btn-outline-warning" for="btnradio3">GOLD</label>
+                        
+                            <input type="radio" v-model="color" value="PLATINUM" class="btn-check form-control" name="btnradioGroup2" id="btnradio4" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="btnradio4">PLATINUM</label>
+                            
+                            <input type="radio" v-model="color" value="SILVER" class="btn-check form-control" name="btnradioGroup2" id="btnradio5" autocomplete="off">
+                            <label class="btn btn-outline-light" for="btnradio5">SILVER</label>
+                        </div>
+                    </div>
+                    <div class="inicioSesion mb-4 mt-4">
+                        <button type="submit" class="btn btn-outline-success">Crear Tarjeta</button>                    
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer>
+            <div class="footer-copyright">
+                <div class="container1">
+                    <a href="https://www.messenger.com/" target="_blank"><img src="https://img.icons8.com/fluency/50/000000/facebook-messenger--v2.png" /></a>
+                    <a href="https://web.whatsapp.com/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/whatsapp.png" /></a>
+                    <a href="https://telegram.org/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/telegram-app.png" /></a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container1">
+                    © 2021 MIND HUB BANK-TODOS LOS DERECHOS RESERVADOS
+                </div>
+            </div>
+        </footer>        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/vue@next"></script>
+        <script src="./scripts/create-cards.js"></script>    
+    </body>
+
+</html>
+
+
+
+

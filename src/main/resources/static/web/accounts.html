@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="shortcut icon" href="https://img.icons8.com/emoji/48/000000/bank-emoji.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <title>Tus Cuentas</title>
+</head>
+
+
+
+<body>
+    <header>
+        <div class="logo">
+            <img class="logo-mh" src="./img/logo.png" alt="">
+            <img class="logo-mindhub" src="./img/fotojet.png" alt="">
+        </div>
+    </header>
+    <button id="burger" class="btn mt-1 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"><img src="https://img.icons8.com/fluency/48/000000/menu--v2.png"/></button>                
+        <div id="app" >
+            <nav class="nav-mobile">                                
+                <div class="btn-group " role="group" aria-label="Basic radio toggle button group"></div>
+                <div>
+                    <input type="radio" class="btn-check bg-light" name="btnradio" id="btnradio1" autocomplete="off">
+                    <label class="btn btn-link link-light text-decoration-none" @click="showModalTitularA" for="btnradio1">Cliente</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-link link-light text-decoration-none" @click="showModalCuentaA" for="btnradio2">Cuentas</label>
+                </div>
+                <div>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-link link-light text-decoration-none" @click="showModalPrestamosB" for="btnradio3">Prestamos</label>
+                    <div class="btn-group mt-2">
+                        <button type="button" class="btn btn-link link-light text-decoration-none w-4 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Transacciones
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li v-for="cuenta in accounts"><a class="dropdown-item" :href="getUrl(cuenta.id)">Cuenta {{cuenta.id}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <main class="d-flex">                    
+                <!-- Contenido de off canvas  -->
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+                    <div class="offcanvas-header">
+                        <div class="logo">
+                            <img class="logo-mh" src="./img/logo.png" alt="">
+                        </div>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <hr>
+                    <div class="offcanvas-body">
+                        <div class="usuario-offcanvas">
+                            <img class="iconoMelba" src="./img/icono.jpeg" alt="">
+                            <p>{{clients.firstName}}, {{clients.lastName}}</p>                       
+                        </div>
+                        <hr>
+                        <div class="cuerpo-offcanvas">                        
+                            <a class="link-dark" href="accounts.html">Cuentas</a>
+                            <a class="link-dark" href="cards.html">Tarjetas</a>
+                            <a class="link-dark" href="transfers.html">Transferencias</a>
+                            <a class="link-dark" href="payments-application.html">Realizar Pagos</a>
+                            <button @click="logOut" class="btn btn-dark">Cerrar Sesion</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- fin Contenido off canvas -->             
+                <nav class="nav flex-column">                                
+                    <div class="btn-group " role="group" aria-label="Basic radio toggle button group"></div>
+                    <input type="radio" class="btn-check bg-light" name="btnradio" id="btnradio1" autocomplete="off">
+                    <label class="btn btn-link link-light text-decoration-none" @click="showModalTitularA" for="btnradio1">Cliente</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-link link-light text-decoration-none" @click="showModalCuentaA" for="btnradio2">Cuentas</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-link link-light text-decoration-none" @click="showModalPrestamosB" for="btnradio3">Prestamos</label>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-link link-light text-decoration-none w-4 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Transacciones
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li v-for="cuenta in accounts"><a class="dropdown-item" :href="getUrl(cuenta.id)">Cuenta {{cuenta.id}}</a></li>
+                        </ul>
+                    </div>
+                </nav>                         
+                <div class="d-flex" id="spinner">
+                    <div class="spinner-grow text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div id="cards-group">               
+                    <div class="card border-primary mb-3 m-4  row animate__animated animate__backInLeft" v-show="showModalTitular">
+                        <div class="card-header">Datos del Titular</div>
+                        <div class="card-body text-primary">
+                            <h5 class="card-title">{{clients.firstName}}, {{clients.lastName}}</h5>
+                            <ul>
+
+                                <li>
+                                    Nombre: {{clients.firstName}}
+                                </li>
+                                <li>
+                                    Apellido: {{clients.lastName}}
+                                </li>
+                                <li>
+                                    Email: {{clients.email}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div> 
+                    <div class="card border-primary mb-3 m-4  row animate__animated animate__backInLeft" v-show="showModalCuenta">              
+                        <div class="card-header"  >Datos de la cuenta</div>
+                        <div class="card-body text-primary">
+                            <h5 class="card-title">{{clients.firstName}}, {{clients.lastName}}</h5>
+                            <ul v-for="account in accounts">
+                                <li>
+                                    Tipo de Cuenta: {{account.type}}
+                                </li>
+                                <li>                                    
+                                    Numero de Cuenta: {{account.number}}
+                                </li>
+                                <li>
+                                    Fecha de Creacion de la Cuenta: {{account.creationDate.slice(0,10)}}
+                                </li>
+                                <li>
+                                    Balance: {{account.balance}}
+                                </li>
+                                 
+                            </ul>
+                            
+                            <div  class="d-flex justify-content-center"><button type="button"  @click="showModalAlert" class="btn btn-success mb-2">Crear Cuenta</button></div>
+                        </div>
+                        <form class="d-flex justify-content-center" >
+                            <h6 class="shadow p-3 mb-5 bg-body rounded">Elija numero de cuenta a Eliminar</h6>
+                        <select class="select-form m-2" v-model="accountNumber"  aria-label="Default select example">                            
+                            <option selected>Open this select menu</option>
+                            <option v-for="account in clients.accounts" :value="account.number">{{account.number}}</option>                               
+                          </select>
+                         
+                        </form>                                        
+                    </div>
+                        <div v-show="alert" class="alert alert-primary mt-2" role="alert">
+                            <h4 class="alert-heading">Crear Cuenta</h4>
+                            <p>Al continuar usted acepta Crear una Cuenta en Mindhub Bank</p>                            
+                            <p class="mb-0">Elija el tipo de cuenta que desea crear y presione Crear Cuenta</p>
+                                <form @submit.prevent="crearCuenta">
+                                    
+                                    <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic checkbox toggle button group">
+                                        <input type="radio" class="btn-check" name="btn-check" v-model="type" value="Corriente" id="btncheck1" autocomplete="off">
+                                        <label class="btn btn-outline-primary m-2" for="btncheck1">CORRIENTE</label>
+                                      
+                                        <input type="radio" class="btn-check" name="btn-check" v-model="type" value="Ahorro" id="btncheck2" autocomplete="off">
+                                        <label class="btn btn-outline-primary m-2" for="btncheck2">AHORRO</label>                                      
+                                      </div>
+                                    
+                                    <p class="mb-0">En el caso de no ser asi presione cancelar, corrobore los datos y vuelva a realizar la operacion.</p>                        
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit"  class="btn-Enviar btn-outline-success btn-sm  m-2">Crear Cuenta</button>
+                                        <button type="button" @click="showModalAlertB" class="btn-Enviar btn-outline-danger btn-sm  m-2">Cancelar Nueva Cuenta</button>
+                                    </div>
+                                </form>
+                        </div>
+                    
+                    <div  class="card border-primary mb-3 m-4  row animate__animated animate__backInLeft" v-show="showModalPrestamos" >
+                        <div class="card-header">Datos del Titular</div>
+                        <div  class="card-body text-primary">
+                            <h5 class="card-title">{{clients.firstName}}, {{clients.lastName}}</h5>
+                            <ul v-for="prestamo in loan">
+                                <li>
+                                    Nombre del Prestamo: {{prestamo.name}}
+                                </li>
+                                <li>
+                                    Monto del Prestamo: {{prestamo.amount}}
+                                </li>
+                                <li>
+                                    Cantidad de Cuotas: {{prestamo.payments}}
+                                </li>
+                            </ul>
+                            <div id="aplicar" class="d-flex justify-content-center"><button type="button" class="btn btn-success mb-2"><a href="./loan-application.html">Aplicar</a></button></div>                       
+                        </div>                   
+                    </div>
+                    
+                </div>
+            </main>
+     </div>
+    
+    <footer>
+        <div class="footer-copyright">
+            <div class="container1">
+                <a href="https://www.messenger.com/" target="_blank"><img src="https://img.icons8.com/fluency/50/000000/facebook-messenger--v2.png" /></a>
+                <a href="https://web.whatsapp.com/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/whatsapp.png" /></a>
+                <a href="https://telegram.org/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/telegram-app.png" /></a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container1">
+                © 2021 MIND HUB BANK-TODOS LOS DERECHOS RESERVADOS
+            </div>
+        </div>
+    </footer>
+    <!-- Start of HubSpot Embed Code -->
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/20808967.js"></script>
+    <!-- End of HubSpot Embed Code -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./scripts/accounts.js"></script>    
+</body>
+
+</html>

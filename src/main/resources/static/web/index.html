@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="shortcut icon" href="https://img.icons8.com/emoji/48/000000/bank-emoji.png" type="image/x-icon">
+    <title>Inicio</title>
+</head>
+
+
+
+<body id="inicio">
+    <header class="mb-4">
+        <div class="logo-header">
+            <img class="logo-mh" src="./img/logo.png" alt="">
+            <img class="logo-mindhub" src="./img/fotojet.png" alt="">
+        </div>
+    </header>
+    <div class="d-flex" id="spinner">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <main class="form" id="app">
+           <div class="d-none" id="none">
+           <div class="container col-4 mt-4 mb-4 animate__animated animate__backInDown" v-show="showModalIniciarSesion">
+            <div class="formInicio mt-4 mb-4">
+                <div class="mb-4 mt-4">
+                    <label for="email" class="form-label">Usuario/Correo</label> 
+                    <input v-model="email" id="email" type="email" placeholder="Introduzca su Email" class="form-control" required>
+                </div>
+                <div class="mb-4 mt-4">
+                    <label for="password" class="form-label">Password</label> 
+                    <input v-model="password" id="password" type="password" placeholder="Introduzca su Password" class="form-control" required>
+                </div>
+                <div class="inicioSesion mb-4 mt-4 d-flex justify-content-around">
+                    <button type="submit" @click="loadData" class="btn btn-success m-2">Iniciar Sesion</button>  
+                    <button type="button" @click="registroCliente" class="btn btn-primary m-2">Crear Cuenta</button>                  
+                </div>
+            </div>
+        </div>
+        <div class="container col-4 mt-4 animate__animated animate__backInDown" v-show="showModalRegistro">
+            <form class="formInicio mt-4 mb-4">
+                <div class="mb-4 mt-4">
+                    <label for="firstName" class="form-label">Nombre</label> 
+                    <input v-model="firstName" id="firstName"  placeholder="Introduzca su Nombre" class="form-control" required>
+                </div>
+                <div class="mb-4 mt-4">
+                    <label for="lastName" class="form-label">Apellido</label> 
+                    <input v-model="lastName" id="lastName"  placeholder="Introduzca su Apellido" class="form-control" required>
+                </div>
+                <div class="mb-4 mt-4">
+                    <label for="email" class="form-label">Usuario/Correo</label> 
+                    <input v-model="email"  type="email" placeholder="Introduzca su Email" class="form-control" required>
+                </div>
+                <div class="mb-4 mt-4">
+                    <label for="password" class="form-label">Password</label> 
+                    <input v-model="password"  type="password" placeholder="Introduzca su Password"  class="form-control" required> 
+                </div>
+                <div class="inicioSesion mb-4 mt-4 d-flex justify-content-around">
+                    <button type="submit" @click="crearCliente" class="btn btn-success m-2">Iniciar Sesion</button>
+                    <button type="button" @click="inicioCliente" class="btn btn-primary m-2">Volver inicio</button>                    
+                </div>
+            </form>
+        </div>
+    </div>
+    </main>
+    <footer>
+        <div class="footer-copyright">
+            <div class="container1">
+                <a href="https://www.messenger.com/" target="_blank"><img src="https://img.icons8.com/fluency/50/000000/facebook-messenger--v2.png" /></a>
+                <a href="https://web.whatsapp.com/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/whatsapp.png" /></a>
+                <a href="https://telegram.org/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/telegram-app.png" /></a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container1">
+                © 2021 MIND HUB BANK-TODOS LOS DERECHOS RESERVADOS
+            </div>
+        </div>
+    </footer>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./scripts/index.js"></script>
+</body>
+
+</html>

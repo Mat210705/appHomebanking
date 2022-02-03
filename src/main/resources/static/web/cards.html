@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/cards.css">
+    <link rel="shortcut icon" href="https://img.icons8.com/emoji/48/000000/bank-emoji.png" type="image/x-icon">
+    <title>Tarjetas</title>
+</head>
+
+
+
+<body>
+    <header>
+        <div class="logo-header">
+            <img class="logo-mh" src="./img/logo.png" alt="">
+            <img class="logo-mindhub" src="./img/fotojet.png" alt="">
+        </div>
+    </header>
+    <main id="app">
+
+            <div class="d-flex">
+                <!-- Contenido de off canvas  -->
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+                    <div class="offcanvas-header">
+                        <div class="logo">
+                            <img class="logo-mh" src="./img/logo.png" alt="">
+                        </div>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <hr>
+                    <div class="offcanvas-body">
+                        <div class="usuario-offcanvas">
+                            <img class="iconoMelba" src="./img/icono.jpeg" alt="">
+                            <p>{{clients.firstName}}, {{clients.lastName}}</p>
+                            
+                        </div>
+                        <hr>
+                        <div class="cuerpo-offcanvas">
+                            <a class="link-primary" href="accounts.html">Cuentas</a>
+                            <a class="link-primary" href="cards.html">Tarjetas</a>
+                            <a class="link-primary" href="transfers.html">Transferencias</a>
+                            <a class="link-primary" href="payments-application.html">Realizar Pagos</a>
+                            <button @click="logOut" class="btn btn-primary">Cerrar Sesion</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenido de off canvas, end.  -->
+            </div>
+            <nav class="nav flex-column">
+                <div id="menu-burguer">
+                    <button class="btn mt-1 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"><img src="https://img.icons8.com/fluency/48/000000/menu--v2.png"/></button>
+                </div>
+            </nav>
+            <div class="inicioSesion mb-4 mt-4 d-flex justify-content-around">
+                <a href="./create-cards.html" class="btn btn-success" role="button">Crear Nueva Tarjeta</a>                    
+            </div>
+            
+                 
+            <div></div>
+            <div class="linea">
+                <hr>
+            </div>
+            <div class="d-flex justify-content-center">
+                <h6>Elija numero de tarjeta </h6>
+                <select v-model="cardNumber" class="form-select-Debit" aria-label="Default select example">
+                    <option selected>Elija el numero de tarjeta de Debito a Eliminar</option>
+                    <option v-for="tarjeta in Debit" :value="tarjeta.number">{{tarjeta.number}}</option>                   
+                </select>
+                <button type="input" @click="EliminarTarjeta(card)" class="btn btn-primary">Eliminar tarjeta</button>
+            </div>
+        <!--Tarjetas-->               
+            <div v-for="tarjeta in Debit" >
+
+                <div class="cards">                    
+                    <div class="card mb-3" :class="{gold:tarjeta.color === `GOLD`, titanium:tarjeta.color === `TITANIUM`, silver:tarjeta.color === `SILVER`}">
+                        <div class="card-header">
+                            <img src="https://img.icons8.com/fluency/48/000000/visa.png" />
+                            <img class="logo-tajeta" src="./img/logo.png" alt="">
+                        </div>
+                        <div class="card-body">
+                                <div class="card-title"><img class="chip" src="https://img.icons8.com/fluency/48/000000/sim-card-chip.png"/><i>Debit</i></div>
+                                <div class="number">{{tarjeta.number}}</div>
+                                <div class="fechas">
+                                    <div class="from">{{tarjeta.fromDate.slice(0,10)}}</div>
+                                    <div :class="{red: tarjetaVencida(tarjeta) === true }" class="to">{{tarjeta.trhuDate.slice(0,10)}}</div>                                
+                                </div>
+                                <div class="name">{{tarjeta.cardHolder}}</div>
+                        </div>
+                    </div>
+                    <div class="card mb-3" :class="{gold:tarjeta.color === `GOLD`, titanium:tarjeta.color === `TITANIUM`, silver:tarjeta.color === `SILVER`}">
+                        <div class="card-headerReverse"><span>{{tarjeta.cvv}}</span></div>
+                            <div class="brand">
+                                <img class="logo-tajetaback" src="./img/logo.png" alt="">
+                                <p>MIND HUB BANK-Todos los derechos reservados.-</p> 
+                            </div>
+                    </div>                 
+                </div>               
+            </div>
+            <div class="linea">
+                <hr>
+            </div>
+            <div class="d-flex justify-content-center">
+                <h6>Elija numero de tarjeta </h6>
+                <select v-model="cardNumber" class="form-select-Credit" aria-label="Default select example">
+                    <option selected>Elija el numero de tarjeta de Debito a Eliminar</option>
+                    <option v-for="tarjeta in Credit" value="1">{{tarjeta.number}}</option>                   
+                </select>
+                <button type="input" @click="EliminarTarjeta(card)" class="btn btn-primary">Eliminar tarjeta</button>
+            </div>                                                                         
+            <div v-for="tarjeta in Credit" >                        
+                        <div class="cards">                            
+                            <div class="card mb-3" :class="{gold:tarjeta.color === `GOLD`, titanium:tarjeta.color === `TITANIUM`, silver:tarjeta.color === `SILVER`}">
+                                <div class="card-header">
+                                    <img src="https://img.icons8.com/fluency/48/000000/visa.png" />
+                                    <img class="logo-tajeta" src="./img/logo.png" alt="">
+                                </div>
+                                <div class="card-body">
+                                        <div class="card-title"><img class="chip" src="https://img.icons8.com/fluency/48/000000/sim-card-chip.png"/><i>Credit</i></div>
+                                        <div class="id"></div>
+                                        <div class="number">{{tarjeta.number}}</div>
+                                        <div class="fechas">
+                                            <div class="from">{{tarjeta.fromDate.slice(0,10)}}</div>
+                                            <div :class="{red: tarjetaVencida(tarjeta) === true }" class="to">{{tarjeta.trhuDate.slice(0,10)}}</div>
+                                        </div>
+                                        <div class="name">{{tarjeta.cardHolder}}</div>
+                                </div>
+                            </div>
+                            <div class="card mb-3" :class="{gold:tarjeta.color === `GOLD`, titanium:tarjeta.color === `TITANIUM`, silver:tarjeta.color === `SILVER`}">
+                                <div class="card-headerReverse"><span>{{tarjeta.cvv}}</span></div>
+                                    <div class="brand">
+                                        <img class="logo-tajetaback" src="./img/logo.png" alt="">
+                                        <p>MIND HUB BANK-Todos los derechos reservados.-</p> 
+                                </div>
+                            </div>
+                    </div>
+                                       
+                    <div class="linea">
+                        <hr>
+                    </div>                                                                     
+            </div>
+            
+    </main>                       
+    <footer>
+        <div class="footer-copyright">
+            <div class="container1">
+                <a href="https://www.messenger.com/" target="_blank"><img src="https://img.icons8.com/fluency/50/000000/facebook-messenger--v2.png" /></a>
+                <a href="https://web.whatsapp.com/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/whatsapp.png" /></a>
+                <a href="https://telegram.org/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/telegram-app.png" /></a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container1">
+                © 2021 MIND HUB BANK-TODOS LOS DERECHOS RESERVADOS
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./scripts/card.js"></script>    
+</body>
+
+</html>

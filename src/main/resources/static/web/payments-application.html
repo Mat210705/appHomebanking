@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="shortcut icon" href="https://img.icons8.com/emoji/48/000000/bank-emoji.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <title>Pago de cuentas</title>
+</head>
+
+
+
+<body>
+    <header>
+        <div class="logo">
+            <img class="logo-mh" src="./img/logo.png" alt="">
+            <img class="logo-mindhub" src="./img/fotojet.png" alt="">
+        </div>
+    </header>
+    
+    <div id="carouselExampleSlidesOnly" class="carousel slide d-flex justify-content-center" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="./img/FotoJet1.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="./img/FotoJet2.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <main id="app">
+        <a href="accounts.html"><img class="flecha" src="https://img.icons8.com/fluency/48/000000/left.png" /></a>
+        <div class="container-payments">
+            
+            <form id="payments">  
+                <h2>Complete el formulario para Realizar un Pago</h2>                                                                
+                <h6>Indique el numero de tarjeta con la que quiere abonar</h6>
+                <div class="input-group input-group-sm mb-3 mt-2">                                                              
+                    <select v-model="numberCard" class="form-select" aria-label="Default select example">
+                        <option selected>Indique el numero de tarjeta</option>
+                        <option v-for="tarjetas in cards" :value="tarjetas.number" >Tarjeta N°: {{tarjetas.number}} </option>                           
+                        </select>
+                    </div>
+                    <h6>Indique el CVV de seguridad de la Tarjeta Seleccionada.</h6>
+                    <div  class="input-group input-group-sm mb-3 mt-2">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Indique su CVV</span>
+                            <input v-model="cvv" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                          </div>
+                    </div>
+                    <h6>Indique la Descripcion de Pago</h6>                      
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Indique Descripcion</span>
+                        <input v-model="description" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                      </div>
+                        <h6>Indique el monto a abonar.</h6>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input v-model="amount" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                            <span class="input-group-text">.00</span>
+                          </div>
+                    <button @click="showModalAlert" type="button" class="btn-Enviar btn-outline-success btn-sm">Aceptar Pago</button>
+                    <div v-show="alert" class="alert alert-success mt-2" role="alert">
+                        <h4 class="alert-heading">Abonar Pago!</h4>
+                        <p>Al continuar usted acepta el pago que decidio procesar con los siguientes datos</p>
+                        <hr>
+                        <p>Numero de Tarjeta: {{numberCard}}</p>
+                        <p>CVV: {{cvv}}</p>
+                        <p>Descripcion del pago Abonado: {{description}}</p>
+                        <p>Monto del pago Abonado:{{amount}}</p>                
+                        <hr>
+                        <p class="mb-0">En el caso de no ser asi presione cancelar, corrobore los datos y vuelva a realizar la operacion.</p>
+                        <button @click="loadPayments" type="button"  class="btn-Enviar btn-outline-success btn-sm">Aceptar Pago</button>
+                        <button @click="showModalAlertB" type="button"  class="btn-Enviar btn-outline-danger btn-sm">Cancelar</button>
+                    </div>
+            </form>  
+        </div>
+    </main>
+    <footer>
+        <div class="footer-copyright">
+            <div class="container1">
+                <a href="https://www.messenger.com/" target="_blank"><img src="https://img.icons8.com/fluency/50/000000/facebook-messenger--v2.png" /></a>
+                <a href="https://web.whatsapp.com/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/whatsapp.png" /></a>
+                <a href="https://telegram.org/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/telegram-app.png" /></a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container1">
+                © 2021 MIND HUB BANK-TODOS LOS DERECHOS RESERVADOS
+            </div>
+        </div>
+    </footer>    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./scripts/payments-application.js"></script>
+    
+</body>
+
+</html>

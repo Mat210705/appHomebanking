@@ -1,0 +1,18 @@
+header {
+    background-color: crimson;
+    height: 10vh;
+}
+header h1{
+    diplay:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin: 2vw;
+}
+
+pre .col-lg-5 {
+    overflow-y: scroll;
+    height: 30vh
+}

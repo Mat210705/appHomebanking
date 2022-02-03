@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="shortcut icon" href="https://img.icons8.com/emoji/48/000000/bank-emoji.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <title>Transferecias</title>
+</head>
+
+
+
+<body>
+    <header>
+        <div class="logo">
+            <img class="logo-mh" src="./img/logo.png" alt="">
+            <img class="logo-mindhub" src="./img/fotojet.png" alt="">
+        </div>
+    </header>
+    
+    <div id="carouselExampleSlidesOnly" class="carousel slide d-flex justify-content-center" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="./img/FotoJet1.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="./img/FotoJet2.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <main id="app">
+            <a href="accounts.html"><img class="flecha" src="https://img.icons8.com/fluency/48/000000/left.png" /></a>
+            <div id="app" class="d-flex flex-column">
+                
+                <form class="transfers">
+                    <h6>Seleccione la Cuenta desde la que quiere realizar la Operacion.</h6>                                        
+                      <div class="input-group input-group-sm mb-3 mt-2">                       
+                        <select v-model="ctaOrigen" class="form-select" aria-label="Default select example">
+                            <option selected>Seleccione una de sus cuentas</option>
+                            <option v-for="cuenta in accounts" :value="cuenta.number">Cuenta:{{cuenta.number}}</option>                           
+                          </select>
+                      </div>
+                      <h6>Seleccione la Cuenta desde la que quiere realizar la Operacion.</h6>
+                      <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        <button type="button" @click="showModalCtaPropia"  class="btn btn-outline-primary btn-sm">Cta Propia</button>
+                        <button type="button" @click="showModalATerceros"  class="btn btn-outline-primary btn-sm">Cta a Terceros</button>                        
+                      </div>
+                      <div v-show="aTerceros" class="input-group input-group-sm mb-3 mt-2">                       
+                        <input type="text" class="form-control" v-model="ctaDestino" placeholder="Escriba el numero de Cuenta" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required>
+                      </div>
+                      <div v-show="aPropia" class="input-group input-group-sm mb-3 mt-2">                       
+                        <select v-model="ctaDestino" class="form-select" aria-label="Default select example">
+                            <option selected>Seleccione una de sus cuentas</option>
+                            <option v-for="cuenta in filtrarCuenta"  :value="cuenta.number">Cuenta:{{cuenta.number}}</option>                           
+                          </select>
+                      </div>
+                      <div class="input-group mb-3 mt-2">
+                        <span class="input-group-text">$</span>                                           
+                        <input type="text" class="form-control" v-model="monto" placeholder="Ingrese el monto a Transferir" aria-label="Dollar amount (with dot and two decimal places)" required>
+                      </div>
+                    <div class="mb-3 mt-2">
+                        <label for="exampleFormControlTextarea1"  class="form-label">Descripcion de la Transferencia</label>
+                        <textarea class="form-control" v-model="descripcion" placeholder="Escriba una descripcion de la Transferencia" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                    </div> 
+                    <button type="button" @click="showModalAlert" class="btn-Enviar btn-outline-success btn-sm" required>Enviar Transferencia</button>                    
+                </form>
+                <div v-show="alert" class="alert alert-success mt-2" role="alert">
+                    <h4 class="alert-heading">Realizar Transferencia!</h4>
+                    <p>Al continuar usted acepta la transeferencia realizada a la cuenta dirigida, el monto y la descripcion realizada</p>
+                    <hr>
+                    <p>Cuenta de Origen:{{ctaOrigen}}</p>
+                    <p>Cuenta de Destino:{{ctaDestino}}</p>
+                    <p>Monto:{{monto}}</p>
+                    <p>Descripcion: {{descripcion}}</p>                
+                    <hr>
+                    <p class="mb-0">En el caso de no ser asi presione cancelar, corrobore los datos y vuelva a realizar la operacion.</p>
+                    <button type="button" @click="realizarTransferencia" class="btn-Enviar btn-outline-success btn-sm">Aceptar Transferencia</button>
+                    <button type="button" @click="showModalAlertB" class="btn-Enviar btn-outline-danger btn-sm">Cancelar Transferencia</button>
+                  </div>
+                                                   
+            </div>
+    </main>
+    <footer>
+        <div class="footer-copyright">
+            <div class="container1">
+                <a href="https://www.messenger.com/" target="_blank"><img src="https://img.icons8.com/fluency/50/000000/facebook-messenger--v2.png" /></a>
+                <a href="https://web.whatsapp.com/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/whatsapp.png" /></a>
+                <a href="https://telegram.org/" target="_blank"><img src="https://img.icons8.com/fluency/48/000000/telegram-app.png" /></a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container1">
+                © 2021 MIND HUB BANK-TODOS LOS DERECHOS RESERVADOS
+            </div>
+        </div>
+    </footer>    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./scripts/transfers.js"></script>
+    
+</body>
+
+</html>
